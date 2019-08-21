@@ -12,5 +12,12 @@ print("A statement on the same line of a one line comment") # One line comment a
 # Insert hashtag for each line
 # to insert multiline comment
 # like this
-print("A statement after a multiline comment")
+print("A statement after a multiline comment using #")
 
+"""
+Multiline String
+This comment is
+written in more
+than one line
+"""
+print("A statement after multiline string using triple quotes")
