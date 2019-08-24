@@ -80,6 +80,7 @@ print("----------------------------------------")
 #  Display a random number between 1 and 100
 print("Random number between 1 and 100:")
 print(random.randrange(1, 101))
+print("----------------------------------------")
 
 # ------------ [Errors] ------------
 # # convert from complex to float
