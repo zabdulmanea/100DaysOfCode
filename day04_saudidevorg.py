@@ -2,10 +2,10 @@ import random
 
 # Python Numbers
 
-# Numeric variables types 
-x = 2 # integer number
-y = 2.5 # float number
-z = 2j # complex number
+# Numeric variables types
+x = 2  # integer number
+y = 2.5  # float number
+z = 2j  # complex number
 
 # Print the numbers and determine their types
 print("Print the numbers and determine their types")
@@ -15,9 +15,9 @@ print(z, ":", type(z))
 print("----------------------------------------")
 
 # Integer numbers
-positive_int = 2 # positive integer
-negative_int = -2 # negative integer
-long_int = 245565768798779789 # long integer
+positive_int = 2  # positive integer
+negative_int = -2  # negative integer
+long_int = 245565768798779789  # long integer
 
 # Print the integer numbers and determine their types
 print("Print the integer numbers and determine their types")
@@ -27,9 +27,9 @@ print(long_int, ":", type(long_int))
 print("----------------------------------------")
 
 # Float numbers
-positive_float = 2.56 # positive float
-negative_float = -25.367 # negative float
-powerOf10_float = -82.56e100 # scientific numbers with an "e"
+positive_float = 2.56  # positive float
+negative_float = -25.367  # negative float
+powerOf10_float = -82.56e100  # scientific numbers with an "e"
 
 # Print the float numbers and determine their types
 print("Print the float numbers and determine their types")
@@ -52,9 +52,9 @@ print("----------------------------------------")
 
 # Type Conversion
 
-x = 1 # int
-y = 2.5 # float
-z = 2j # complex
+x = 1  # int
+y = 2.5  # float
+z = 2j  # complex
 
 # convert from integer to float
 a = float(x)
@@ -66,20 +66,20 @@ c = complex(y)
 d = int(y)
 
 # Print the numbers and their types
-print("Convert the int number", x , "to float:")
+print("Convert the int number", x, "to float:")
 print(a, ":", type(a))
-print("Convert the int number", x , "to complex:")
+print("Convert the int number", x, "to complex:")
 print(b, ":", type(b))
-print("Convert the float number", y , "to complex:")
+print("Convert the float number", y, "to complex:")
 print(c, ":", type(c))
-print("Convert the float number", y , "to int:")
+print("Convert the float number", y, "to int:")
 print(d, ":", type(d))
 print("----------------------------------------")
 
 
 #  Display a random number between 1 and 100
 print("Random number between 1 and 100:")
-print(random.randrange(1,101))
+print(random.randrange(1, 101))
 
 # ------------ [Errors] ------------
 # # convert from complex to float
