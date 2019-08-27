@@ -26,7 +26,7 @@ print("---------------------------------------------")
 # Replace a string with another string
 x = "Code"
 print("The original string:", x)
-print("The string after replacement using replace():", x.replace('C', 'M'))
+print("The string after using replace():", x.replace('C', 'M'))
 print("---------------------------------------------")
 
 # Split the string into substrings
