@@ -1,4 +1,4 @@
-# Python Tuples
+# Python Tuples - part 1
 """ A tuple is a collection which is ordered and unchangeable
 and it's written with round brackets ()
 """
