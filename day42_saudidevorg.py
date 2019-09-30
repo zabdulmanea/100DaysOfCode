@@ -33,3 +33,4 @@ del p1.age
 # 5. Delete the p1 object.
 del p1
 # print(p1) # NameError: name 'p1' is not defined
+print("---------------------------")
