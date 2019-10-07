@@ -14,8 +14,6 @@ def myfunc():
 
     myinnerfunc()
 
-# 3. Global Scope
-
 
 myfunc()
 print(y)
