@@ -1,0 +1,121 @@
+html, body {
+    direction: rtl;
+    height: 100%;
+    font-size: 18px;
+    line-height: 1.6em;
+    font-family: 'Almarai', sans-serif;
+}
+
+p {
+    margin: 15px 0 15px 0;
+}
+
+.jumbotron {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    /* flex-direction: row-reverse;    */
+}
+
+.img-logo {
+    width: 150px;
+    margin: 0;
+    padding: 0;
+    margin-right: 20px;
+}
+
+.web-title {
+    margin-right: 20px;
+}
+
+.about-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-box p {
+    text-align: justify;
+}
+
+.about-box {
+    flex: 0 1 70%;
+}
+
+.img-box {
+    margin: 0 auto;
+}
+
+.img-box img {
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.home-container img {
+    min-width: 100%;
+    border-radius: 15px;
+}
+
+.home-text {
+    text-align: center;
+}
+
+.home-text p {
+    color: teal;
+}
+
+.products-container {
+    min-height: 100%;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+}
+
+.sidebar {
+    width: 250px;
+    border: 3px solid black;
+    text-align: center;
+}
+
+.content {
+    flex: 1 0 auto;
+    border: 3px solid red;
+}
+
+button {
+    display: block;
+    background: none;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 20px;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    width: 100%;
+    background-color: blue;
+}
+
+/* Remove the navbar's default rounded borders and increase the bottom margin */
+
+.navbar {
+    margin-bottom: 50px;
+    border-radius: 0;
+    font-size: 20px;
+}
+
+/* Remove the jumbotron's default bottom margin */
+
+.jumbotron {
+    margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+
+footer {
+    background-color: #f2f2f2;
+    padding: 10px;
+    font-size: 14px;
+}

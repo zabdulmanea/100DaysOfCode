@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>منتجاتنا</title>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="products-container">
+    <aside class="sidebar">
+        <h2>أقسام المنتجات</h2>
+        <button>الإضاءات المنزلية</button>
+        <button>الإضاءات الرمضانية</button>
+        <button>حفلات الأطفال</button>
+    </aside>
+
+    <hr>
+
+    <div class="content">
+        <div class="row">
+            <h2>جميع المنتجات</h2>
+            <div class="col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">الشموع المضيئة الثلاثية</div>
+                    <div class="panel-body"><img src="../static/images/3_colored_candle.jpg" class="img-responsive"
+                            style="width:100%" alt="Colored candle"></div>
+                    <div class="panel-footer">35 ريال سعودي</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">البالونات المضيئة في الظلام</div>
+                    <div class="panel-body"><img src="../static/images/light_baloons.jpg" class="img-responsive"
+                            style="width:100%" alt="Image"></div>
+                    <div class="panel-footer">10 ريال سعودي</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">الستارة المضيئة</div>
+                    <div class="panel-body"><img src="../static/images/light_curtain.jpg" class="img-responsive"
+                            style="width:100%" alt="Image"></div>
+                    <div class="panel-footer">120 ريال سعودي</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
