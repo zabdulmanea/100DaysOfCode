@@ -72,7 +72,7 @@ def orderProducts(order_id):
         cursor.execute(sql)
         categories = cursor.fetchall()
 
-        # if there is an order 
+        # if there is any order request
         if order_id != 0:
             # view all the information about the ordered product
             sql = "SELECT category.name, sub_category.name, product_item.name, product_item.price, order_item.quantity \
@@ -114,7 +114,7 @@ def orderProducts(order_id):
                 mysql.get_db().commit()
                 order_id = cursor.lastrowid
 
-            # create order item
+            # create an order item
             sql = "INSERT INTO order_item (order_id, product_id, quantity) VALUES (%s, %s, %s)"
             val = (order_id, product_id, quantity)
             cursor.execute(sql, val)
