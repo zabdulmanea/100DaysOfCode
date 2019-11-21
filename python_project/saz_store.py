@@ -179,7 +179,6 @@ def productsJSON(sub_cat_id):
     cursor.execute(sql)
     products = cursor.fetchall()
 
-
     productArr = []
 
     for product in products:
