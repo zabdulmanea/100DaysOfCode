@@ -4,47 +4,54 @@
 <title>منتجاتنا</title>
 {% endblock %}
 
-
 {% block content %}
+
+<style>
+    .container {
+        margin: 0 auto;
+        padding: 0;
+        width: 100%;
+    }
+
+    .navbar {
+        margin-bottom: 0px;
+    }
+</style>
 
 <div class="products-container">
     <aside class="sidebar">
-        <h2>أقسام المنتجات</h2>
-        <button>الإضاءات المنزلية</button>
-        <button>الإضاءات الرمضانية</button>
-        <button>حفلات الأطفال</button>
+        {% for category in categories %}
+        <p>{{ category[1] }}</p>
+        {% for subcategory in subcategories %}
+        {% if category[0] == subcategory[1] %}
+        <a href="{{ url_for('viewProducts', subcat_id=subcategory[0]) }}">{{ subcategory[2] }}</a>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
     </aside>
-
-    <hr>
-
+    ​
     <div class="content">
-        <div class="row">
-            <h2>جميع المنتجات</h2>
-            <div class="col-sm-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">الشموع المضيئة الثلاثية</div>
-                    <div class="panel-body"><img src="../static/images/3_colored_candle.jpg" class="img-responsive"
-                            style="width:100%" alt="Colored candle"></div>
-                    <div class="panel-footer">35 ريال سعودي</div>
+        {% if subcat_id == 0 %}
+        <h2>جميع المنتجات</h2>
+        {% else %}
+        <h2>منتجات {{ subcat_name[0] }}</h2>
+        {% endif %}
+
+
+        <div class="items-container">
+            {% for item in items %}
+            <div class="item-div">
+                <h4>{{  item[2] }}</h4>
+                <div class="img-container">
+                    <img class="item-img" src="{{  item[3] }}" alt="">
                 </div>
+                <p>السعر: <span>{{  item[4] }} SAR</span></p>
             </div>
-            <div class="col-sm-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">البالونات المضيئة في الظلام</div>
-                    <div class="panel-body"><img src="../static/images/light_baloons.jpg" class="img-responsive"
-                            style="width:100%" alt="Image"></div>
-                    <div class="panel-footer">10 ريال سعودي</div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">الستارة المضيئة</div>
-                    <div class="panel-body"><img src="../static/images/light_curtain.jpg" class="img-responsive"
-                            style="width:100%" alt="Image"></div>
-                    <div class="panel-footer">120 ريال سعودي</div>
-                </div>
-            </div>
+            {% endfor %}
+
         </div>
+
     </div>
 </div>
+
 {% endblock %}

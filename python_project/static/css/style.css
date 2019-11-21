@@ -1,7 +1,10 @@
+/***  pages style
+--------------------------------------------------------------------------- ***/
+
 html, body {
     direction: rtl;
     height: 100%;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.6em;
     font-family: 'Almarai', sans-serif;
 }
@@ -9,6 +12,9 @@ html, body {
 p {
     margin: 15px 0 15px 0;
 }
+
+/***  header style
+--------------------------------------------------------------------------- ***/
 
 .jumbotron {
     display: flex;
@@ -27,6 +33,9 @@ p {
 .web-title {
     margin-right: 20px;
 }
+
+/***  about page style
+--------------------------------------------------------------------------- ***/
 
 .about-container {
     width: 100%;
@@ -53,6 +62,9 @@ p {
     margin: 0 auto;
 }
 
+/***  home page style
+--------------------------------------------------------------------------- ***/
+
 .home-container img {
     min-width: 100%;
     border-radius: 15px;
@@ -66,6 +78,9 @@ p {
     color: teal;
 }
 
+/***  products page style
+--------------------------------------------------------------------------- ***/
+
 .products-container {
     min-height: 100%;
     display: flex;
@@ -74,29 +89,165 @@ p {
 }
 
 .sidebar {
-    width: 250px;
-    border: 3px solid black;
+    /* flex: 1; */
+    min-width: 250px;
+    border-left: 1px solid rgb(122, 117, 117);
     text-align: center;
+    background-color: darkslategrey;
+    /* height: 100%; */
+}
+
+.sidebar p {
+    color: whitesmoke;
 }
 
 .content {
-    flex: 1 0 auto;
-    border: 3px solid red;
+    /* flex: 3; */
+    color: darkslategrey;
+    padding: 20px;
 }
 
-button {
+.items-container {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.item-div {
+    /* border: 1px solid #959072; */
+    background-color: whitesmoke;
+    border-radius: 10px;
+    width: 30%;
+    height: auto;
+    text-align: center;
+    margin: 10px;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    /* flex: 1 0 auto; */
+}
+
+.item-img {
+    border-radius: 20px;
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+}
+
+.item-div span {
+    color: #6f173c;
+}
+
+.item-div p {
+    color: #31708f;
+}
+
+.sidebar a {
     display: block;
     background: none;
-    color: white;
+    color: darkslategray;
     font-weight: bold;
     border: none;
-    padding: 20px;
+    padding: 10px;
     font: inherit;
     cursor: pointer;
     outline: inherit;
     width: 100%;
-    background-color: blue;
+    background-color: whitesmoke;
+    font-size: smaller;
 }
+
+.sidebar a:hover, .sidebar a:active {
+    text-decoration: underline;
+    background-color: rgba(241, 236, 233, 0.5);
+    color: #000000;
+}
+
+/***  form style
+--------------------------------------------------------------------------- ***/
+
+.form-container {
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px;
+    background-color: #d6d1c0;
+}
+
+.create-buttons {
+    margin: 15px;
+    text-align: center;
+}
+
+form h2 {
+    margin-bottom: 5px;
+}
+
+input[type=text], input[type=button], select {
+    margin: 5px 0 22px 0;
+}
+
+select {
+    height: 40px;
+}
+
+input[type=text], input[type=button], select {
+    width: 50%;
+    padding: 15px;
+    border: none;
+    background: #f1f1f1;
+    font-size: 12px;
+    display: block;
+}
+
+input[type=text]:focus, input[type=button], select:focus {
+    background-color: #ffffff;
+    outline: none;
+}
+
+.create:hover, .create:active {
+    color: darkslategray;
+}
+
+.create, input[type=button] {
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    text-decoration: none;
+    color: #f0e7d7;
+    background-color: darkslategray;
+    padding: 10px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.cancel {
+    background-color: darkred;
+    text-decoration: none;
+    color: #f0e7d7;
+    padding: 10px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.cancel:hover {
+    color: darkred;
+}
+
+input[type=submit]:hover, input[type=submit]:active {
+    text-decoration: underline;
+    background-color: rgba(241, 236, 233, 0.5);
+}
+
+.add_order {
+    width: 100%;
+}
+
+/***  customize bootstrap style
+--------------------------------------------------------------------------- ***/
 
 /* Remove the navbar's default rounded borders and increase the bottom margin */
 
@@ -118,4 +269,35 @@ footer {
     background-color: #f2f2f2;
     padding: 10px;
     font-size: 14px;
+}
+
+/***  table style
+--------------------------------------------------------------------------- ***/
+
+table {
+    border-collapse: collapse;
+    width: 70%;
+    margin: 10px auto;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+th {
+    background-color: #758671;
+}
+
+/***  flash message style
+--------------------------------------------------------------------------- ***/
+
+.flash-message {
+    list-style: none;
+    text-align: center;
+}
+
+.flash-message-green {
+    color: rgb(10, 114, 10);
 }

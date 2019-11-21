@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Almarai&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -18,7 +18,7 @@
     <div class="jumbotron">
         <div class=" text-right">
             <a class="logo-link" href="{{ url_for('home') }}">
-                <img src="../static/images/Logo1.png" alt="شعار متجر ساز" class="img-logo">
+                <img src="/static/images/Logo1.png" alt="شعار متجر ساز" class="img-logo">
             </a>
         </div>
         <div class="web-title text-right">
@@ -39,8 +39,8 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('home') }}">الرئيسية</a></li>
-                    <li><a href="{{ url_for('viewProducts') }}">المنتجات</a></li>
-                    <li><a href="#">اطلب الآن</a></li>
+                    <li><a href="{{ url_for('viewProducts', subcat_id=0) }}">المنتجات</a></li>
+                    <li><a href="{{ url_for('orderProducts', order_id=0) }}">اطلب الآن</a></li>
                     <li><a href="{{ url_for('aboutUs') }}">نبذة عنا</a></li>
                     <li><a href="#">تواصل معنا</a></li>
                 </ul>
@@ -49,9 +49,19 @@
     </nav>
 
     <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flash-message flash-message-green">
+            {% for message in messages%}
+            <li><strong>{{ message }}</strong></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
         {% block content %}
         {% endblock %}
-    </div><br><br>
+    </div>
 
     <footer class="container-fluid text-center">
         <p>جميع الحقوق محفوظة 2019</p>

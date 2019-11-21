@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>طلب المنتجات</title>
+{% endblock %}
+
+{% block content %}
+
+<form method="post" name="Form" id="myform">
+    <h2>طلب المنتجات</h2>
+
+    <div class="form-container">
+
+        <label for="category-name"><b>صنف المنتج</b></label>
+        <select id="category" name="selected-category" required>
+            <option disabled selected value> -- اختر تصنيف المنتج -- </option>
+            {% for category in categories %}
+            <option value="{{ category[0] }}">{{ category[1] }} </option>
+            {% endfor %}
+        </select>
+
+        <label for="subcategory-name"><b>نوع المنتج</b></label>
+        <select id="subcategory" name="selected-subcategory" required disabled>
+            <option disabled selected value> -- اختر نوع المنتج -- </option>
+        </select>
+
+        <label for="product-name"><b>اسم المنتج</b></label>
+        <select id="product" name="selected-product" required disabled>
+            <option disabled selected value> -- اختر المنتج -- </option>
+        </select>
+
+        <label for="product-quantity"><b>الكمية</b></label>
+        <input class="field" type="text" placeholder="أدخل كمية المنتج" name="product-quantity" required>
+
+        <div class="create-buttons">
+            <input class="create add_order" type="submit" name="action" value="+ أضف المنتج">
+        </div>
+
+
+        {% if order_id !=  0 %}
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>اسم المنتج</th>
+                    <th>النوع</th>
+                    <th>الصنف</th>
+                    <th>سعر القطعة</th>
+                    <th>الكمية</th>
+                </tr>
+
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order[2] }}</td>
+                    <td>{{ order[1] }}</td>
+                    <td>{{ order[0] }}</td>
+                    <td>{{ order[3] }}</td>
+                    <td>{{ order[4] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <table>
+                <tr>
+                    <th>السعر الكلي</th>
+                    <th>السعر مع ضريبة القيمة المضافة</th>
+                </tr>
+
+                <tr>
+                    <td>{{ total }} SAR</td>
+                    <td>{{ totaltax }} SAR</td>
+                </tr>
+            </table>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <div class="create-buttons">
+        <input class="create" type="submit" name="action" value="إرسال الطلب">
+        <input class="cancel" type="submit" name="action" value="إلغاء الطلب">
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // ignore empty fields on click إرسال الطلب 
+            $(".create").click(function () {
+                $('select').prop('required', false);
+                $('input[type="text"]').prop('required', false);
+            });
+
+            // ignore empty fields on click إلغاء الطلب
+            $(".cancel").click(function () {
+                $('select').prop('required', false);
+                $('input[type="text"]').prop('required', false);
+            });
+
+            // dropdown elements
+            categoryElement = document.getElementById("category");
+            subCategoryElement = document.getElementById("subcategory");
+            productElement = document.getElementById("product");
+            
+            // populate subcategories json file based on the selected category option
+            categoryElement.onchange = function () {
+                choisevalue = categoryElement.value;
+                // enable the subcategory dropdown list
+                $('#subcategory').prop('disabled', false);
+                // display the subcategories from json file related with the category
+                fetch('/subcategories/' + choisevalue + '/JSON').then(function (response) {
+                    response.json().then(function (data) {
+                        var optionHTML = '';
+                        optionHTML += '<option disabled selected value> -- اختر نوع المنتج -- </option>';
+                        for (var subcategory of data.subcategories) {
+                            optionHTML += '<option value="' + subcategory.id + '">' + subcategory.name + '</option>';
+                        }
+                        subCategoryElement.innerHTML = optionHTML;
+                    });
+                });
+            }
+
+            // populate products json file based on the selected sub-category option
+            subCategoryElement.onchange = function () {
+                choisevalue = subCategoryElement.value;
+
+                // enable the subcategory dropdown list
+                $('#product').prop('disabled', false);
+
+                // display the products from json file related with the sub-category
+                fetch('/products/' + choisevalue + '/JSON').then(function (response) {
+                    response.json().then(function (data) {
+                        var optionHTML = '';
+                        optionHTML += '<option disabled selected value> -- اختر المنتج -- </option>';
+                        for (var product of data.products) {
+                            optionHTML += '<option value="' + product.id + '">' + product.name + '</option>';
+                        }
+                        productElement.innerHTML = optionHTML;
+                    });
+                });
+            }
+
+        });
+
+    </script>
+</form>
+{% endblock %}
