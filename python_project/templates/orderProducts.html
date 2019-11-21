@@ -76,7 +76,7 @@
     </div>
 
     <div class="create-buttons">
-        <input class="create" type="submit" name="action" value="إرسال الطلب">
+        <input class="create" id="create" type="submit" name="action" value="إرسال الطلب">
         <input class="cancel" type="submit" name="action" value="إلغاء الطلب">
     </div>
 
@@ -85,7 +85,7 @@
         $(document).ready(function () {
 
             // ignore empty fields on click إرسال الطلب 
-            $(".create").click(function () {
+            $("#create").click(function () {
                 $('select').prop('required', false);
                 $('input[type="text"]').prop('required', false);
             });
@@ -138,7 +138,6 @@
                     });
                 });
             }
-
         });
 
     </script>
