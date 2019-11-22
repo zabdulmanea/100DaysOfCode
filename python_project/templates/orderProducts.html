@@ -37,7 +37,7 @@
         </div>
 
 
-        {% if order_id !=  0 %}
+        {% if product_id is not none %}
         <div class="table-container">
             <table>
                 <tr>
@@ -50,11 +50,11 @@
 
                 {% for order in orders %}
                 <tr>
-                    <td>{{ order[2] }}</td>
-                    <td>{{ order[1] }}</td>
-                    <td>{{ order[0] }}</td>
-                    <td>{{ order[3] }}</td>
-                    <td>{{ order[4] }}</td>
+                    <td>{{ order["product_name"] }}</td>
+                    <td>{{ order["subcategory_name"] }}</td>
+                    <td>{{ order["category_name"] }}</td>
+                    <td>{{ order["price"] }}</td>
+                    <td>{{ order["quantity"] }}</td>
                 </tr>
                 {% endfor %}
             </table>
@@ -100,7 +100,7 @@
             categoryElement = document.getElementById("category");
             subCategoryElement = document.getElementById("subcategory");
             productElement = document.getElementById("product");
-            
+
             // populate subcategories json file based on the selected category option
             categoryElement.onchange = function () {
                 choisevalue = categoryElement.value;

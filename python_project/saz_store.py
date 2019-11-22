@@ -26,8 +26,8 @@ def aboutUs():
     return render_template('about.html')
 
 # Display products
-@app.route('/products/<int:subcat_id>/')
-def viewProducts(subcat_id):
+@app.route('/products')
+def viewProducts():
     subcat_name = ''
     cursor = mysql.get_db().cursor()
 
@@ -41,7 +41,9 @@ def viewProducts(subcat_id):
     cursor.execute(sql)
     subcategories = cursor.fetchall()
 
-    if subcat_id == 0:
+    subcat_id = request.args.get('subcat_id', default=None, type=int)
+
+    if subcat_id is None:
         # Read all products
         sql = '''SELECT * FROM product_item;'''
         cursor.execute(sql)
@@ -53,17 +55,20 @@ def viewProducts(subcat_id):
         cursor.execute(sql)
         items = cursor.fetchall()
 
+        # Read the sub category name
         sql = "SELECT name FROM sub_category WHERE id = %s LIMIT 1;" % subcat_id
         cursor.execute(sql)
         subcat_name = cursor.fetchone()
 
-    return render_template('viewProducts.html', 
-    items=items, categories=categories, subcategories=subcategories, 
-    subcat_id=subcat_id, subcat_name=subcat_name)
+    return render_template('viewProducts.html',
+                           items=items, categories=categories, subcategories=subcategories,
+                           subcat_id=subcat_id, subcat_name=subcat_name)
 
+
+orders = []
 # Order products
-@app.route('/order/<int:order_id>/', methods=['GET', 'POST'])
-def orderProducts(order_id):
+@app.route('/order/', methods=['GET', 'POST'])
+def orderProducts():
     cursor = mysql.get_db().cursor()
 
     if request.method == 'GET':
@@ -72,29 +77,46 @@ def orderProducts(order_id):
         cursor.execute(sql)
         categories = cursor.fetchall()
 
+        product_id = request.args.get('product_id', default=None, type=int)
+        quantity = request.args.get('quantity', default=None, type=int)
+
         # if there is any order request
-        if order_id != 0:
-            # view all the information about the ordered product
-            sql = "SELECT category.name, sub_category.name, product_item.name, product_item.price, order_item.quantity \
-                FROM category, sub_category, product_item, order_item \
-                WHERE product_item.sub_cat_id = sub_category.id AND sub_category.category_id = category.id \
-                AND order_item.product_id = product_item.id \
-                AND order_item.order_id = %s;" % (order_id)
+        if product_id is not None:
+            # read the information about the selected product
+            sql = "SELECT * FROM order_view WHERE product_id = %s;" % product_id
             cursor.execute(sql)
-            orderView = cursor.fetchall()
+            orderView = cursor.fetchone()
 
-            # calculate the total price 
-            total = 0
-            for order in orderView:
-                total += int(order[3]) * int(order[4])
+            # save the order info into dictionary
+            keys = ["product_id", "product_name", "subcategory_name",
+                    "category_name", "price", "quantity"]
+            order = dict(zip(keys, [None]*len(keys)))
 
-            # calculate the total price with taxes
-            totaltax = total * 1.05
+            order["product_id"] = product_id
+            order["product_name"] = orderView[1]
+            order["subcategory_name"] = orderView[2]
+            order["category_name"] = orderView[3]
+            order["price"] = orderView[4]
+            order["quantity"] = quantity
 
-            return render_template('orderProducts.html', order_id=order_id, categories=categories, 
-                                   orders=orderView, total=total, totaltax=totaltax)
+            # save all selected products in a list
+            if order not in orders:
+                orders.append(order)
 
-        return render_template('orderProducts.html', order_id=order_id, categories=categories)
+                # calculate the total price
+                total = 0
+                for order in orders:
+                    total += order["quantity"] * float(order["price"])
+
+                # calculate the total price with taxes
+                totaltax = total * 1.05
+
+            return render_template('orderProducts.html', categories=categories, product_id=product_id,
+                                   orders=orders, total=total, totaltax=totaltax)
+        else:
+            orders.clear()
+
+        return render_template('orderProducts.html', categories=categories, product_id=product_id)
 
     elif request.method == 'POST':
 
@@ -103,38 +125,39 @@ def orderProducts(order_id):
             product_id = request.form.get('selected-product')
             quantity = request.form['product-quantity']
 
-            # create an order id if there is no one
-            if order_id == 0:
-                # create order id
+            return redirect(url_for('orderProducts', product_id=product_id, quantity=quantity))
+
+        elif request.form['action'] == 'إرسال الطلب':
+            if len(orders) is not 0:
+                # create an order id
                 sql = "INSERT INTO orders (order_date) VALUES (%s)"
                 now_date = datetime.datetime.now()
                 formatted_date = now_date.strftime('%Y-%m-%d %H:%M:%S')
                 val = (formatted_date,)
                 cursor.execute(sql, val)
                 mysql.get_db().commit()
+                # get the order id
                 order_id = cursor.lastrowid
 
-            # create an order item
-            sql = "INSERT INTO order_item (order_id, product_id, quantity) VALUES (%s, %s, %s)"
-            val = (order_id, product_id, quantity)
-            cursor.execute(sql, val)
-            mysql.get_db().commit()
+                # insert order items into db
+                sql = "INSERT INTO order_item (order_id, product_id, quantity) VALUES (%s, %s, %s)"
+                val = []
+                for order in orders:
+                    val.append(
+                        (order_id, order["product_id"], order["quantity"]))
+                cursor.executemany(sql, val)
+                mysql.get_db().commit()
 
-            return redirect(url_for('orderProducts', order_id=order_id))
-
-        elif request.form['action'] == 'إرسال الطلب':
-            if order_id != 0:
                 flash("تم إرسال طلبك بنجاح!")
+                orders.clear()
                 return redirect(url_for('viewProducts', subcat_id=0))
             else:
-                return redirect(url_for('orderProducts', order_id=0))
+                return redirect(url_for('orderProducts'))
 
         elif request.form['action'] == 'إلغاء الطلب':
-            sql = "DELETE FROM orders WHERE id = %s" % order_id
-            cursor.execute(sql)
-            mysql.get_db().commit()
-            flash("تم إلغاء طلبك !")
+            orders.clear()
             return redirect(url_for('viewProducts', subcat_id=0))
+
 
 # ------------------- JSON Endpoints -------------------------
 @app.route('/categories/JSON')
@@ -156,7 +179,7 @@ def subcategoriesJSON(category_id):
     cursor = mysql.get_db().cursor()
     # Read subcategories of specific category
     sql = '''SELECT * FROM sub_category WHERE category_id = %s;''' % category_id
-    cursor.execute(sql)    
+    cursor.execute(sql)
     subcategories = cursor.fetchall()
 
     subcategoryArr = []
@@ -167,8 +190,7 @@ def subcategoriesJSON(category_id):
         subcategoryObj['name'] = subcategory[2]
         subcategoryArr.append(subcategoryObj)
 
-    return jsonify({'subcategories' : subcategoryArr})
-
+    return jsonify({'subcategories': subcategoryArr})
 
 
 @app.route('/products/<int:sub_cat_id>/JSON')
@@ -188,7 +210,7 @@ def productsJSON(sub_cat_id):
         productArrObj['price'] = product[3]
         productArr.append(productArrObj)
 
-    return jsonify({'products' : productArr})
+    return jsonify({'products': productArr})
 
 
 if __name__ == '__main__':

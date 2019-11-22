@@ -31,7 +31,7 @@
     </aside>
     ​
     <div class="content">
-        {% if subcat_id == 0 %}
+        {% if subcat_id is none %}
         <h2>جميع المنتجات</h2>
         {% else %}
         <h2>منتجات {{ subcat_name[0] }}</h2>
