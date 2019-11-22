@@ -10,48 +10,6 @@ app.config['MYSQL_DATABASE_DB'] = 'sql12312605'
 
 mysql = MySQL(app)
 
-
-# READ/SELECT
-@app.route('/')
-@app.route('/read')
-def read():
-    cursor = mysql.get_db().cursor()
-    sql = '''SELECT * FROM category;'''
-    cursor.execute(sql)
-    result = cursor.fetchall()
-    return str(result)
-
-# CREATE/INSERT
-@app.route('/create')
-def create():
-    cursor = mysql.get_db().cursor()
-    sql = "INSERT INTO category (name) VALUES (%s)"
-    val = ("تجربة",)
-    cursor.execute(sql, val)
-    mysql.get_db().commit()
-
-    return "New records INSERTED!!"
-
-# UPDATE
-@app.route('/update')
-def update():
-    cursor = mysql.get_db().cursor()
-    sql = "UPDATE category SET name = 'تجربة بعد التعديل' WHERE name = 'تجربة'"
-    cursor.execute(sql)
-    mysql.get_db().commit()
-    return "Records UPDATED!!"
-
-# DELETE
-@app.route('/delete')
-def delete():
-    cursor = mysql.get_db().cursor()
-
-    sql = "DELETE FROM category WHERE name = 'تجربة بعد التعديل' OR name = 'تجربة'"
-    cursor.execute(sql)
-    mysql.get_db().commit()
-
-    return "Records DELETED!!"
-
 # INSERT product items
 @app.route('/insert_all_items')
 def insert_items():
@@ -94,6 +52,48 @@ def insert_items():
 
     return "New records inserted!!"
 
+# CRUD Operations #
+
+# READ/SELECT
+@app.route('/')
+@app.route('/read')
+def read():
+    cursor = mysql.get_db().cursor()
+    sql = '''SELECT * FROM category;'''
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return str(result)
+
+# CREATE/INSERT
+@app.route('/create')
+def create():
+    cursor = mysql.get_db().cursor()
+    sql = "INSERT INTO category (name) VALUES (%s)"
+    val = ("تجربة",)
+    cursor.execute(sql, val)
+    mysql.get_db().commit()
+
+    return "New records INSERTED!!"
+
+# UPDATE
+@app.route('/update')
+def update():
+    cursor = mysql.get_db().cursor()
+    sql = "UPDATE category SET name = 'تجربة بعد التعديل' WHERE name = 'تجربة'"
+    cursor.execute(sql)
+    mysql.get_db().commit()
+    return "Records UPDATED!!"
+
+# DELETE
+@app.route('/delete')
+def delete():
+    cursor = mysql.get_db().cursor()
+
+    sql = "DELETE FROM category WHERE name = 'تجربة بعد التعديل' OR name = 'تجربة'"
+    cursor.execute(sql)
+    mysql.get_db().commit()
+
+    return "Records DELETED!!"
 
 if __name__ == '__main__':
     app.run(debug=True)
