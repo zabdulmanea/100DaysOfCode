@@ -20,13 +20,16 @@
 
 <div class="products-container">
     <aside class="sidebar">
+
         {% for category in categories %}
-        <p>{{ category[1] }}</p>
-        {% for subcategory in subcategories %}
-        {% if category[0] == subcategory[1] %}
-        <a href="{{ url_for('viewProducts', subcat_id=subcategory[0]) }}">{{ subcategory[2] }}</a>
-        {% endif %}
-        {% endfor %}
+        <button type="button" class="collapsible">{{ category[1] }}</button>
+        <div class="collapsible-content">
+            {% for subcategory in subcategories %}
+            {% if category[0] == subcategory[1] %}
+            <a href="{{ url_for('viewProducts', subcat_id=subcategory[0]) }}">{{ subcategory[2] }}</a>
+            {% endif %}
+            {% endfor %}
+        </div>
         {% endfor %}
     </aside>
     ​
@@ -53,5 +56,26 @@
 
     </div>
 </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var coll = document.getElementsByClassName("collapsible");
+
+        var i;
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    });
+
+</script>
 
 {% endblock %}

@@ -150,6 +150,7 @@ p {
     color: darkslategray;
     font-weight: bold;
     border: none;
+    border-bottom: 1px solid rgba(181, 184, 184, .5);
     padding: 10px;
     font: inherit;
     cursor: pointer;
@@ -163,6 +164,29 @@ p {
     text-decoration: underline;
     background-color: rgba(241, 236, 233, 0.5);
     color: #000000;
+}
+
+/***  collabse style
+--------------------------------------------------------------------------- ***/
+
+.collapsible {
+    display: block;
+    padding: 30px;
+    width: 100%;
+    outline: none;
+    color: whitesmoke;
+    border: none;
+    border-bottom: 1px solid whitesmoke;
+    background-color: darkslategrey;
+}
+
+.collapsible:hover {
+    background-color: rgb(31, 53, 53);
+}
+
+.collapsible-content {
+    overflow: hidden;
+    display: none;
 }
 
 /***  form style
@@ -254,6 +278,8 @@ input[type=submit]:hover, input[type=submit]:active {
     margin-bottom: 50px;
     border-radius: 0;
     font-size: 20px;
+    background-color: rgb(22, 44, 44);
+    border: none;
 }
 
 /* Remove the jumbotron's default bottom margin */
@@ -283,6 +309,7 @@ td, th {
     border: 1px solid #dddddd;
     text-align: center;
     padding: 8px;
+    font-weight: bolder;
 }
 
 th {

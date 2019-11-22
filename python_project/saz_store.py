@@ -115,7 +115,6 @@ def orderProducts():
                                    orders=orders, total=total, totaltax=totaltax)
         else:
             orders.clear()
-
         return render_template('orderProducts.html', categories=categories, product_id=product_id)
 
     elif request.method == 'POST':
@@ -150,13 +149,13 @@ def orderProducts():
 
                 flash("تم إرسال طلبك بنجاح!")
                 orders.clear()
-                return redirect(url_for('viewProducts', subcat_id=0))
+                return redirect(url_for('viewProducts'))
             else:
                 return redirect(url_for('orderProducts'))
 
         elif request.form['action'] == 'إلغاء الطلب':
             orders.clear()
-            return redirect(url_for('viewProducts', subcat_id=0))
+            return redirect(url_for('viewProducts'))
 
 
 # ------------------- JSON Endpoints -------------------------
